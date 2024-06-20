@@ -205,11 +205,18 @@
 
                         @foreach($links_media_lokal as $key=>$media_lokal)
                             @php
-                                $kode_media = explode("|||",$media_lokal)[0];
-
-                            $get_dt_media = DB::select(DB::raw("select * from mediapartner where kode_media='$kode_media'"));
-                            $media_name = $get_dt_media[0]->name;
-                            $data_link_withmedia = str_replace($kode_media,$media_name,$media_lokal);
+                            $getkode_media = explode("|||",$media_lokal)[0];
+                            //echo "Kode media broyy : ".$getkode_media; die;
+                                if($getkode_media!="no media"){
+                                    $kode_media = explode("|||",$media_lokal)[0];
+                                    $get_dt_media = DB::select(DB::raw("select * from mediapartner where kode_media='$kode_media'"));
+                                    $media_name = $get_dt_media[0]->name;
+                                    $data_link_withmedia = str_replace($kode_media,$media_name,$media_lokal);
+                                } else if($getkode_media=="no media"){
+                                    $kode_media = explode("|||",$media_lokal)[0];
+                                    $media_name = "no media";
+                                    $data_link_withmedia = str_replace($kode_media,$media_name,$media_lokal);
+                                }
                             @endphp
                             <div class="row">
                                 <div class="col-lg-12">
@@ -219,7 +226,7 @@
                                             <a class="" target="_blank" style="text-decoration: none; overflow: auto"
                                                href="{{ $media_lokal }}">
 
-                                                {{ $data_link_withmedia }}
+                                                {{ $data_link_withmedia }} <?php //die; ?>
                                             </a>
                                         </div>
                                     </div>
@@ -230,6 +237,7 @@
 
 
                         @endforeach
+
 
                     </div>
 
@@ -253,13 +261,21 @@
                         ?>
 
                         @foreach($links_media_nasional as $key=>$media_nasional)
-                            @php
-                                $kode_media = explode("|||",$media_nasional)[0];
+                                @php
+                                    $getkode_media = explode("|||",$media_nasional)[0];
+                                    //echo "Kode media broyy : ".$getkode_media; die;
+                                        if($getkode_media!="no media"){
+                                            $kode_media = explode("|||",$media_nasional)[0];
+                                            $get_dt_media = DB::select(DB::raw("select * from mediapartner where kode_media='$kode_media'"));
+                                            $media_name = $get_dt_media[0]->name;
+                                            $data_link_withmedia = str_replace($kode_media,$media_name,$media_nasional);
+                                        } else if($getkode_media=="no media"){
+                                            $kode_media = explode("|||",$media_nasional)[0];
+                                            $media_name = "no media";
+                                            $data_link_withmedia = str_replace($kode_media,$media_name,$media_nasional);
+                                        }
+                                @endphp
 
-                            $get_dt_media = DB::select(DB::raw("select * from mediapartner where kode_media='$kode_media'"));
-                            $media_name = $get_dt_media[0]->name;
-                            $data_link_withmedia = str_replace($kode_media,$media_name,$media_nasional);
-                            @endphp
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="row">
